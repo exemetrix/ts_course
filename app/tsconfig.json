@@ -1,9 +1,9 @@
 {
-    "extends": "../tsconfig.base", // .json extension is not needed
+    "extends": "../tsconfig.base", // Extend the main config file ().json extension is not needed)
     "compilerOptions": {
         "removeComments": true
     },
     "include": [
-        "./**/*" // Begin searching in the current dir; search recursively in all subdirs
+        "./**/*" // Begin searching for ts files in the current dir; search recursively in all subdirs
     ]
 }
