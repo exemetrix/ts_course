@@ -1,37 +1,20 @@
-function startGame() {
+/// <reference path="player.ts" />
+/// <reference path="game.ts" />
 
-    // Start a new game
+let newGame: Game;
 
-    let playerName: string | undefined = getInputValue('playername');
-    logPlayer(playerName);
-    postScore(100, playerName);
-    postScore(-5, playerName);
-}
+document.getElementById('startGame')!.addEventListener('click', () => {
+    
+    const player: Player = new Player();
 
-const logPlayer = (name: string = 'MultiMath Player'): void => console.log(`Starting a new game for player: ${name}`);
+    player.name = Utility.getInputValue('playername');
+    
+    const problemCount: number = Number(Utility.getInputValue('problemCount'));
+    const factor: number = Number(Utility.getInputValue('factor'));
 
-const getInputValue = (elementID: string): string | undefined => {
+    newGame = new Game(player, problemCount, factor);
+    newGame.displayGame();
+});
 
-    const inputElement: HTMLInputElement = <HTMLInputElement>document.getElementById(elementID);
-    return inputElement.value === '' ? undefined : inputElement.value;
-}
-
-const postScore = (score: number, playerName: string = 'MultiMath Player'): void => {
-
-    let logger: (value: string) => void; // Type of logger should be a function that expects a string and doesn't return
-    logger = (score > 0) ? logMessage : logError;
-
-    const scoreElement: HTMLElement | null = document.getElementById('postedScores');
-    scoreElement!.innerText = `${score} - ${playerName}`;
-
-    logger(`Score: ${score}`);
-}
-
-const logMessage = (message: string): void => console.log(message);
-
-function logError(err: string): void {
-    console.error(err);
-}
-
-
-document.getElementById('startGame')!.addEventListener('click', startGame);
+// Add click listener for 'Calculate' score button
+document.getElementById('calculate')!.addEventListener('click', () => { newGame.calculateScore(); });
