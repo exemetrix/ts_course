@@ -1,11 +1,11 @@
-/// <reference path="utility.ts" />
-/// <reference path="result.ts" />
-/// <reference path="player.ts" />
-/// <reference path="scoreboard.ts" />
+import { getValue } from './utility';
+import { Result } from './result';
+import { Player } from './player';
+import { Scoreboard } from './scoreboard';
 
 // import {html} from 'lit-html'
 
-class Game {
+export class Game {
 
     private scoreboard: Scoreboard = new Scoreboard();
     // player: Player;
@@ -19,7 +19,6 @@ class Game {
     }
 
     /*
-
     The classical approach to define a constructor and initialize attributes
 
     constructor(newPlayer: Player, numbOfProblems: number, multFactor: number) {
@@ -55,7 +54,7 @@ class Game {
         let score: number = 0;
 
         for(let i=1; i<=this.problemCount; i++) {
-            const answer: number = Number(Utility.getInputValue(`answer${i}`));
+            const answer: number = Number(getValue(`answer${i}`));
             if(i * this.factor === answer) {
                 score++;
             }

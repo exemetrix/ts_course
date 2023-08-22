@@ -1,6 +1,6 @@
-/// <reference path="person.ts" />
+import { Person } from './person'; // No need to add .ts extension
 
-class Player implements Person {
+export class Player implements Person {
 
     name: string;
     age: number;

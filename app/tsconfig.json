@@ -2,7 +2,9 @@
     "extends": "../tsconfig.base", // Extend the main config file ().json extension is not needed)
     "compilerOptions": {
         "removeComments": true,
-        "outFile": "../js/app.js" // Concatenate all generated JS in a single file
+        "module": "commonjs",
+        "moduleResolution": "node",
+        // "traceResolution": true,
     },
     "files": [
         "./app.ts" // Begin searching for ts files to compile in the current dir; search recursively in all subdirs

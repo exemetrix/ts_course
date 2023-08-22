@@ -1,80 +1,38 @@
-class Player {
-    formatName() {
-        return this.name.toUpperCase();
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
     }
-}
-class Utility {
-}
-Utility.getInputValue = (elementID) => {
-    const inputElement = document.getElementById(elementID);
-    return inputElement.value;
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
-class Scoreboard {
-    constructor() {
-        this.results = [];
-    }
-    addResult(newResult) {
-        this.results.push(newResult);
-    }
-    updateScoreboard() {
-        let output = `<h2>Scoreboard</h2>`;
-        this.results.forEach((result, idx, array) => {
-            output += `<h4>${result.playerName}: ${result.score}/${result.problemCount} for factor ${result.factor}</h4>`;
-        });
-        document.getElementById('scores').innerHTML = output;
-    }
-}
-class Game {
-    constructor(player, problemCount, factor) {
-        this.player = player;
-        this.problemCount = problemCount;
-        this.factor = factor;
-        this.scoreboard = new Scoreboard();
-        console.log("New game created!");
-    }
-    displayGame() {
-        let gameForm = '';
-        for (let i = 1; i <= this.problemCount; i++) {
-            gameForm += `
-            <div class="form-group">
-                <label for="answer${i}" class="col-sm-2 control-label">
-                    ${String(this.factor)} x ${i} = 
-                </label>
-                <div class="col-sm-1">
-                    <input type="text" class="form-control" id="answer${i}" size="5"></input>
-                </div>
-            </div>
-            `;
-        }
-        document.getElementById('game').innerHTML = gameForm;
-        document.getElementById('calculate').removeAttribute('disabled');
-    }
-    calculateScore() {
-        let score = 0;
-        for (let i = 1; i <= this.problemCount; i++) {
-            const answer = Number(Utility.getInputValue(`answer${i}`));
-            if (i * this.factor === answer) {
-                score++;
-            }
-        }
-        const result = {
-            playerName: this.player.name,
-            score: score,
-            problemCount: this.problemCount,
-            factor: this.factor
-        };
-        this.scoreboard.addResult(result);
-        this.scoreboard.updateScoreboard();
-        document.getElementById('calculate').setAttribute('disabled', 'true');
-    }
-}
+Object.defineProperty(exports, "__esModule", { value: true });
+const Helpers = __importStar(require("./utility"));
+const player_1 = require("./player");
+const game_1 = require("./game");
 let newGame;
 document.getElementById('startGame').addEventListener('click', () => {
-    const player = new Player();
-    player.name = Utility.getInputValue('playername');
-    const problemCount = Number(Utility.getInputValue('problemCount'));
-    const factor = Number(Utility.getInputValue('factor'));
-    newGame = new Game(player, problemCount, factor);
+    const player = new player_1.Player();
+    player.name = Helpers.getValue('playername');
+    const problemCount = Number(Helpers.getValue('problemCount'));
+    const factor = Number(Helpers.getValue('factor'));
+    newGame = new game_1.Game(player, problemCount, factor);
     newGame.displayGame();
 });
 document.getElementById('calculate').addEventListener('click', () => { newGame.calculateScore(); });
